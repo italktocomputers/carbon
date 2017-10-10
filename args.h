@@ -10,7 +10,7 @@
 /* This structure is used by main to communicate with parse_opt. */
 struct arguments {
     settings arg_settings;
-    void (*effect)(hid_device*, settings*);
+    bool (*effect)(hid_device*, settings*);
 };
 
 /*

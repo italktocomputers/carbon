@@ -1,7 +1,7 @@
 #include "effects.h"
 #include "ls.h"
 
-void set_brightness(hid_device* dev, settings *s) {
+bool set_brightness(hid_device* dev, settings *s) {
     unsigned char data[] = {
         0x11 /* Report number */,
         0xff /* Not sure what this is */,
@@ -15,10 +15,15 @@ void set_brightness(hid_device* dev, settings *s) {
         0x02 /* Not sure what this is */,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // There needs to be 20 bytes in total, apparently.
     };
-    hid_write(dev, data, 20);
+    int r = hid_write(dev, data, 20)
+    if(r < 0) {
+        fprintf(stderr, "Error(%d) sending data '%ls'\n", r, data);
+        return false;
+    }
+    return true;
 }
 
-void breathe(hid_device* dev, settings *s) {
+bool breathe(hid_device* dev, settings *s) {
     unsigned char data[] = {
         0x11 /* Report number */,
         0xff /* Not sure what this is */,
@@ -35,9 +40,14 @@ void breathe(hid_device* dev, settings *s) {
         0x64 /* Not sure what this is */,
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // There needs to be 20 bytes in total, apparently.
     };
-    hid_write(dev, data, 20);
+    int r = hid_write(dev, data, 20)
+    if(r < 0) {
+        fprintf(stderr, "Error(%d) sending data '%ls'\n", r, data);
+        return false;
+    }
+    return true;
 }
 
-void ls(hid_device* dev, settings *s) {
-    libusb_ls(dev, s);
+bool ls(hid_device* dev, settings *s) {
+    return libusb_ls(dev, s);
 }

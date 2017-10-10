@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <hidapi/hidapi.h>
 #include "effects.h"
 #include "args.h"
@@ -27,7 +28,9 @@ int main(int argc, char* argv[]) {
         fprintf(stderr, "No Logitech G413 Carbon keyboards found.\n");
         goto cleanup;
     }
-    args.effect(handle, &s);
+    if(!args.effect(handle, &s)) {
+        goto cleanup;
+    }
 
 cleanup:
     hid_close(handle);
