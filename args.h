@@ -5,7 +5,7 @@
 #include <argp.h>
 #include <stdbool.h>
 #include <hidapi/hidapi.h>
-#include "effects.h"
+#include "settings.h"
 
 /* This structure is used by main to communicate with parse_opt. */
 struct arguments {
@@ -73,6 +73,8 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state) {
                 arguments->effect = breathe;
             } else if(strncmp(arg, "level", 8) == 0) {
                 arguments->effect = set_brightness;
+            } else if(strncmp(arg, "ls", 8) == 0) {
+                arguments->effect = ls;
             }
             break;
         default:
@@ -86,7 +88,7 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state) {
    A description of the non-option command-line arguments
      that we accept.
 */
-static char args_doc[] = "effect (resets to mid-brightness if empty)";
+static char args_doc[] = "(level|breathe|ls)";
 
 /*
   DOC.  Field 4 in ARGP.

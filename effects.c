@@ -1,4 +1,5 @@
 #include "effects.h"
+#include "ls.h"
 
 void set_brightness(hid_device* dev, settings *s) {
     unsigned char data[] = {
@@ -35,4 +36,8 @@ void breathe(hid_device* dev, settings *s) {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // There needs to be 20 bytes in total, apparently.
     };
     hid_write(dev, data, 20);
+}
+
+void ls(hid_device* dev, settings *s) {
+    libusb_ls(dev, s);
 }
