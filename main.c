@@ -17,7 +17,13 @@ int main(int argc, char* argv[]) {
 
     hid_device *handle;
     handle = hid_open(0x046d, 0xc33a, NULL);
+    if(handle == 0) {
+        fprintf(stderr, "No Logitech G413 Carbon keyboards found.\n");
+        goto cleanup;
+    }
     args.effect(handle, &s);
+
+cleanup:
     hid_close(handle);
     handle = NULL;
     hid_exit();
