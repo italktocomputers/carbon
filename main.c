@@ -3,11 +3,10 @@
 #include "effects.h"
 #include "args.h"
 
-int main(int argc, char* argv[]) {
-    settings s;
-    s.brightness = 0x80;
-    s.speed = 0x10;
+const char *argp_program_version = "Carbon 0.1";
+const char *argp_program_bug_address = "cryptarch@github";
 
+int main(int argc, char* argv[]) {
     struct arguments args;
     args.arg_settings.brightness = 0x80;
     args.arg_settings.speed = 0x10;
