@@ -20,6 +20,8 @@ struct arguments {
 static struct argp_option options[] = {
     {"brightness",  'b', "STRING", 0, "Maximum key brightness from 00-ff in hexadecimal. (Default: 80, i.e. 50\%)"},
     {"speed",  's', "STRING", 0, "Breathe speed from 00-ff in hexadecimal. Set to 0xff to have one cycle every minute. (Default: 20)"},
+    {"vendor", 'v', "STRING", 0, "Vendor ID in hexadecimal (046d for Logitech)."},
+    {"product", 'p', "STRING", 0, "Product ID in hexadecimal (c33a for G413 Carbon)."},
     {"help", 'h', NULL, 0, "Print this help message."},
     {0}
 };
@@ -60,6 +62,34 @@ static error_t parse_opt (int key, char *arg, struct argp_state *state) {
             }
             if(ishex && nxdig >= 0 && nxdig <= 2) {
                 arguments->arg_settings.speed = strtoul(arg, NULL, 16);
+            }
+            break;
+        case 'v':
+            while(*c != '\0') {
+                if(!isxdigit(*c)) {
+                    ishex = false;
+                    break;
+                } else {
+                    ++nxdig;
+                }
+                ++c;
+            }
+            if(ishex && nxdig >= 0 && nxdig <= 4) {
+                arguments->arg_settings.vendor = strtoul(arg, NULL, 16);
+            }
+            break;
+        case 'p':
+            while(*c != '\0') {
+                if(!isxdigit(*c)) {
+                    ishex = false;
+                    break;
+                } else {
+                    ++nxdig;
+                }
+                ++c;
+            }
+            if(ishex && nxdig >= 0 && nxdig <= 4) {
+                arguments->arg_settings.product = strtoul(arg, NULL, 16);
             }
             break;
         case 'h':
