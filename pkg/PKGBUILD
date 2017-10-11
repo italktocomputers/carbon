@@ -1,0 +1,28 @@
+# Maintainer: devzero
+
+_gitname=carbon
+_appname="${_gitname}"
+pkgname="${_gitname}-git"
+pkgver=0.1
+pkgrel=1
+pkgdesc="Control LEDs on the Logitech G413 Carbon gaming keyboard"
+arch=('x86_64')
+_github_user=cryptarch
+url="https://github.com/${_github_user}/${_gitname}.git"
+license=('GPL')
+depends=('hidapi' 'libusb')
+makedepends=('git' 'gcc' 'make')
+source=("git://github.com/${_github_user}/${_gitname}.git")
+
+build() { :
+    cd ${_gitname}
+    make
+}
+
+package() {
+    cd ${_gitname}
+    mkdir -pv ${pkgdir}/usr/bin/
+    cp ./carbon ${pkgdir}/usr/bin/
+}
+
+md5sums=('SKIP')
